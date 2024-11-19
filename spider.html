@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spider Eyes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    /* 전체 페이지 배경 */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      flex-direction: column;
+    }
+
+    /* 웹캠 비디오 컨테이너 */
+    .video-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0px;
+    }
+
+    canvas {
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 5px;
+    }
+
+    #canvas1, #canvas4 {
+      width: 27vmin;
+      height: 27vmin;
+      position: relative;
+      top: -22vmin;
+    }
+
+    #canvas2, #canvas3 {
+      width: 55vmin;
+      height: 55vmin;
+      position: relative;
+      top: -12vmin;
+    }
+
+    .subtitle-wrapper {
+      font-family: Montserrat;
+      margin: 0;
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      color: white;
+
+    }
+
+    .subtitle-wrapper span {
+      font-weight: 600;
+      font-size: 1.2rem;
+      padding: 0px 30px;
+    }
+
+    .subtitle-wrapper .left {
+      text-align: left;
+    }
+
+    .subtitle-wrapper .center {
+      text-align: center;
+    }
+
+    .subtitle-wrapper .right {
+      text-align: right;
+    }
+
+    .text-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      color: white;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 0.8rem;
+      width: 60vw;
+      word-break: keep-all;
+       
+    }
+
+    .text-item {
+      padding: 10px;
+      text-align: left;
+      line-height: 1.5;
+
+    }
+
+    /* 이전 페이지로 돌아가는 버튼 */
+    .back-button {
+      position: absolute;
+      bottom: 5%;  
+      left: 3%;    
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      font-size: 0.8rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #555;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- 웹캠 비디오 컨테이너 -->
+  <div class="video-container">
+    <canvas id="canvas1"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas3"></canvas>
+    <canvas id="canvas4"></canvas>
+  </div>
+
+  <div class="subtitle-wrapper">
+    <span class="left">The Eyes</span>
+    <span class="center">of</span>
+    <span class="right">Jumping Spider</span>
+  </div>
+
+  <div class="text-container">
+    <div class="text-item">The researchers discovered photoreceptors for ultraviolet, blue, and green wavelengths in the spiders' retinas with microspectrophotometry, though no red photoreceptors. They also examined for filters. As such, they discovered that these spiders perceive red and black similarly, and that if red is recognised differently from black, it is perceived as a dark'spider green' rather than red.  </div>
+    <div class="text-item">연구진은 거미의 망막에서 자외선, 청색, 녹색 파장에 대한 광수용체를 미세 분광 광도계로 발견했지만 적색 광수용체는 발견하지 못했습니다. 따라서 연구진은 이 거미들이 빨간색과 검은색을 비슷하게 인식하고 있으며 빨간색이 검은색과 다르게 인식되면 빨간색이 아닌 어두운 '거미 녹색'으로 인식된다는 사실을 발견했습니다.</div>
+  </div>
+
+  <button class="back-button" onclick="window.history.back();">이전 페이지로 돌아가기</button>
+
+  <script>
+    // 웹캠 스트림을 받아오는 함수
+    function startWebcam() {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+          const canvas1 = document.getElementById('canvas1');
+          const canvas2 = document.getElementById('canvas2');
+          const canvas3 = document.getElementById('canvas3');
+          const canvas4 = document.getElementById('canvas4');
+
+          const ctx1 = canvas1.getContext('2d');
+          const ctx2 = canvas2.getContext('2d');
+          const ctx3 = canvas3.getContext('2d');
+          const ctx4 = canvas4.getContext('2d');
+
+          const videoElement = document.createElement('video');
+          videoElement.srcObject = stream;
+          videoElement.play();
+
+          videoElement.onplay = function () {
+            const width = 640;
+            const height = 480;
+            canvas1.width = canvas2.width = canvas3.width = canvas4.width = width;
+            canvas1.height = canvas2.height = canvas3.height = canvas4.height = height;
+
+            function draw() {
+              ctx1.setTransform(-1, 0, 0, 1, width, 0);
+              ctx1.drawImage(videoElement, 0, 0, width, height);
+
+              ctx2.setTransform(-1, 0, 0, 1, width, 0);
+              ctx2.drawImage(videoElement, 0, 0, width, height);
+
+              ctx3.setTransform(-1, 0, 0, 1, width, 0);
+              ctx3.drawImage(videoElement, 0, 0, width, height);
+
+              ctx4.setTransform(-1, 0, 0, 1, width, 0);
+              ctx4.drawImage(videoElement, 0, 0, width, height);
+
+              applyGreenAndBlueFilter(ctx1);
+              applyGreenAndBlueFilter(ctx2);
+              applyGreenAndBlueFilter(ctx3);
+              applyGreenAndBlueFilter(ctx4);
+
+              clipToCircle(ctx1);
+              clipToCircle(ctx2);
+              clipToCircle(ctx3);
+              clipToCircle(ctx4);
+
+              requestAnimationFrame(draw);
+            }
+            draw();
+          }
+        })
+        .catch(function(error) {
+          console.log("웹캠을 사용할 수 없습니다:", error);
+        });
+    }
+
+    // 초록색 강조, 파랑은 유지하고 빨강을 제거하는 필터
+    function applyGreenAndBlueFilter(ctx) {
+      const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+      const data = imageData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];     
+        const g = data[i + 1]; 
+        const b = data[i + 2]; 
+
+        data[i] = 0;      
+        data[i + 2] = b;  
+        data[i + 1] = g;  
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    // 원 모양으로 캔버스를 클리핑
+    function clipToCircle(ctx) {
+      const radius = ctx.canvas.width / 2;
+      const centerX = ctx.canvas.width / 2;
+      const centerY = ctx.canvas.height / 2;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
+      ctx.clip(); 
+      ctx.restore();
+    }
+
+  
+    startWebcam();
+  </script>
+
+</body>
+</html>

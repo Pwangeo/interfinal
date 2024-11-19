@@ -40,6 +40,7 @@
       animation: moveSpider 2s ease-out forwards, loopSpider 2s ease-in-out infinite;
       z-index: 1;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     @keyframes moveSpider {
@@ -93,6 +94,7 @@
     }
 
     .subtitle-wrapper {
+      font-family: Montserrat;
       margin: 0;
       position: absolute;
       top: 2%;
@@ -121,46 +123,86 @@
       text-align: right;
     }
 
-    /* 하단 선 */
+    
     .bottom-line {
       position: fixed;
-      bottom: 40px;
+      bottom: 70px;
       left: 30px;
       right: 30px;
-      height: 2px; /* 선의 두께 */
-      background-color: black; /* 선 색 */
-      border-radius: 10px; /* 끝 부분을 둥글게 처리 */
+      height: 2px; 
+      background-color: black; 
+      border-radius: 10px; 
       z-index: 2;
     }
 
-    /* 화살표 라인의 부모 컨테이너 */
+    .spider-eyes {
+      position: absolute;
+      bottom: 25px; 
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+    }
+
+  
     .right-arrow {
       position: absolute;
-      top: 50%; /* 세로 중앙 정렬 */
-      left: 50%; /* 화살표의 좌측/우측 위치를 기준으로 설정 */
-      transform: translate(-50%, -50%); /* 정확히 세로 중앙으로 이동 */
-      width: 1500px; /* 화살표 라인 너비 */
-      height: 20px; /* 화살표 라인 높이 */
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      width: 1500px; 
+      height: 20px; 
     }
 
-    /* 좌측 화살표 이미지 */
+  
     .arrow-left {
       position: absolute;
-      left: 10px; /* 왼쪽에 배치 */
-      transform: scale(0.7)  scaleX(-1); /* 크기 조정 */
+      left: 10px; 
+      transform: scale(0.7)  scaleX(-1); 
     }
 
-    /* 우측 화살표 이미지 */
+
     .arrow-right {
       position: absolute;
-      right: 10px; /* 오른쪽에 배치 */
-      transform: scale(0.7); /* 좌우 반전과 크기 조정 */
+      right: 10px; 
+      transform: scale(0.7); 
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0px;
+      height: 0px;
+      background-color: black;
+      border-radius: 50%;
+      z-index: 10;
+      animation: growCircle 1.5s forwards, navigatePage 1.5s 1.5s forwards;
+    }
+
+    /* 원이 커지는 애니메이션 */
+    @keyframes growCircle {
+      0% {
+        width: 0px;
+        height: 0px;
+      }
+      100% {
+        width: 150vw;  /* 화면 너비를 넘을 정도로 크게 */
+        height: 150vw;
+      }
+    }
+
+    /* 페이지 이동 애니메이션 */
+    @keyframes navigatePage {
+      100% {
+        opacity: 0;
+      }
     }
 
   </style>
 </head>
 <body>
-  <img src="spider.png" alt="Spider" class="spider-image">
+  <img src="spider.png" alt="Spider" class="spider-image" onclick="createCircle()">
   <div class="title">Jumping Spider</div>
 
   <div class="subtitle-wrapper">
@@ -179,6 +221,9 @@
 
   <div class="bottom-line"></div>
 
+  <!-- spider_eyes 이미지 -->
+  <img src="spider_eyes.png" alt="Spider Eyes" class="spider-eyes">
+  
   <!-- 화살표 라인 -->
   <div class="right-arrow">
     <!-- 좌측 화살표 이미지 -->
@@ -187,6 +232,20 @@
     <!-- 우측 화살표 이미지 -->
     <img src="arrow.png" alt="Right Arrow" class="arrow-right">
   </div>
+
+  <script>
+    function createCircle() {
+      // 회색 원을 화면에 추가
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
+      document.body.appendChild(circle);
+
+      // 애니메이션이 끝나면 페이지 이동
+      setTimeout(() => {
+        window.location.href = 'spider.html'; // 원하는 URL로 이동
+      }, 1500); // 1.5초 후 페이지 이동
+    }
+  </script>
 
 </body>
 </html>
