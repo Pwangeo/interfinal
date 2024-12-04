@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dragonfly Eyes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poiret+One&family=Tomorrow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* 전체 페이지 배경 */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #6cbcaa;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      flex-direction: column;
+    }
+
+    /* 웹캠 비디오 컨테이너 */
+    .video-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0px;
+    }
+
+    canvas {
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 5px;
+    }
+
+    #canvas1, #canvas4 {
+      width: 27vmin;
+      height: 27vmin;
+      position: relative;
+      top: -22vmin;
+    }
+
+    #canvas2, #canvas3 {
+      width: 55vmin;
+      height: 55vmin;
+      position: relative;
+      top: -12vmin;
+    }
+
+    .subtitle-wrapper {
+      font-family: Chonburi;
+      margin: 0;
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      color: white;
+
+    }
+
+    .subtitle-wrapper span {
+      font-weight: 600;
+      font-size: 1.2rem;
+      padding: 0px 30px;
+    }
+
+    .subtitle-wrapper .left {
+      text-align: left;
+    }
+
+    .subtitle-wrapper .center {
+      text-align: center;
+    }
+
+    .subtitle-wrapper .right {
+      text-align: right;
+    }
+
+    .text-container {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      color: white;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 0.8rem;
+      width: 60vw;
+      word-break: keep-all;
+       
+    }
+
+    .text-item {
+      padding: 10px;
+      text-align: left;
+      line-height: 1.5;
+
+    }
+
+    /* 이전 페이지로 돌아가는 버튼 */
+    .back-button {
+      position: absolute;
+      bottom: 5%;  
+      left: 3%;    
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      font-size: 0.8rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #555;
+    }
+
+  </style>
+</head>
+<body>
+
+
+  <div class="subtitle-wrapper">
+    <span class="left">The Eyes</span>
+    <span class="center">of</span>
+    <span class="right">Dragonfly</span>
+  </div>
+
+  <div class="text-container">
+    <div class="text-item">The researchers discovered photoreceptors for ultraviolet, blue, and green wavelengths in the spiders' retinas with microspectrophotometry, though no red photoreceptors. They also examined for filters. As such, they discovered that these spiders perceive red and black similarly, and that if red is recognised differently from black, it is perceived as a dark'spider green' rather than red.  </div>
+    <div class="text-item">연구진은 거미의 망막에서 자외선, 청색, 녹색 파장에 대한 광수용체를 미세 분광 광도계로 발견했지만 적색 광수용체는 발견하지 못했습니다. 따라서 연구진은 이 거미들이 빨간색과 검은색을 비슷하게 인식하고 있으며 빨간색이 검은색과 다르게 인식되면 빨간색이 아닌 어두운 '거미 녹색'으로 인식된다는 사실을 발견했습니다.</div>
+  </div>
+
+  <button class="back-button" onclick="window.history.back();">이전 페이지로 돌아가기</button>
+
+  <script>
+    
+  </script>
+
+</body>
+</html>

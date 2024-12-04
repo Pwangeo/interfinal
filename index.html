@@ -6,7 +6,7 @@
   <title>the eyes of insects</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Comfortaa:wght@300&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Syncopate:wght@400;700&family=Tomorrow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poiret+One&family=Tomorrow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: Montserrat;
@@ -19,7 +19,7 @@
 
     .title {
       position: absolute;
-      top: 15%; 
+      top: 16%; 
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 10.5rem;
@@ -34,7 +34,7 @@
       top: -5%;
       left: 50%;
       transform: translateX(-50%);
-      width: 500px;
+      width: 600px;
       height: auto;
       animation: moveSpider 2s ease-out forwards, loopSpider 2s ease-in-out infinite;
       z-index: 1;
@@ -64,54 +64,118 @@
     }
 
     .spider-image:hover {
-      content: url('spider2.png');
-    }
+  filter: brightness(0);  /* 이미지의 밝기를 0으로 설정해 검은색처럼 보이게 */
+}
 
-    /* Ladybug 이미지가 돌아다닐 컨테이너 스타일 */
-    #ladybug-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none; /* 클릭 방지 */
-    }
-
-      /* 각 Ladybug 스타일 */
-.ladybug {
+    .ladybug {
   position: absolute;
-  width: 50px; /* Ladybug 이미지 크기 */
-  height: 50px;
-  background-image: url('ladybug.png'); /* ladybug 이미지 경로 */
-  background-size: cover;
-  animation: moveLadybug 5s linear infinite, rotateLadybug 5s linear infinite; /* 자유롭게 이동 + 회전 */
-  
-  /* CSS 변수로 설정된 시작 위치 및 회전 적용 */
-  top: var(--y-start);
-  left: var(--x-start);
-  transform: rotate(var(--rotate)); /* 초기 회전 상태 */
+  width: 320px;  /* 크기 조정 */
+  height: 320px;
+  background-image: url('ladybug.png'); /* 이미지 경로 확인 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: none;  /* 기본적으로 숨김 */
+  top: 50%;       /* 화면 중앙에 위치 */
+  left: 51%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, filter 0.3s ease;  /* filter 효과를 부드럽게 전환 */
 }
 
-/* Ladybug 이동 애니메이션 (화면 밖에서부터 들어옴) */
-@keyframes moveLadybug {
+/* 마우스 호버 시 필터로 이미지가 블랙으로 변하게 */
+.ladybug:hover {
+  filter: brightness(0);  /* 이미지의 밝기를 0으로 설정해 검은색처럼 보이게 */
+}
+
+.horsefly {
+  position: absolute;
+  width: 650px;  /* 크기 조정 */
+  height: auto;
+  display: none;  /* 기본적으로 숨김 */
+  top: 50%;       /* 화면 중앙에 위치 */
+  left: 51%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, filter 0.3s ease;  /* filter 효과를 부드럽게 전환 */
+  animation: floatHorsefly 3s ease-in-out infinite; /* 스무스한 위아래 루프 애니메이션 */
+}
+
+/* 마우스 호버 시 필터로 이미지가 블랙으로 변하게 */
+.horsefly:hover {
+  filter: brightness(0);  /* 이미지의 밝기를 0으로 설정해 검은색처럼 보이게 */
+}
+
+/* 위아래로 움직이는 애니메이션 정의 */
+@keyframes floatHorsefly {
   0% {
-    transform: translate(var(--x-start), var(--y-start)) rotate(var(--rotate)); /* 시작 위치 */
+    transform: translate(-50%, -50%) translateY(0); /* 시작 위치 */
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-20px); /* 위로 20px 이동 */
   }
   100% {
-    transform: translate(var(--x-end), var(--y-end)) rotate(var(--rotate + 360)); /* 끝 위치와 회전 */
+    transform: translate(-50%, -50%) translateY(0); /* 원래 위치로 복귀 */
   }
 }
 
-/* Ladybug 회전 애니메이션 (자유롭게 회전) */
-@keyframes rotateLadybug {
+
+.honeybee {
+  position: absolute;
+  width: 370px;  /* 크기 조정 */
+  height: 370px;
+  background-image: url('bee.png'); /* 이미지 경로 확인 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: none;  /* 기본적으로 숨김 */
+  top: 50%;       /* 화면 중앙에 위치 */
+  left: 51%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, filter 0.3s ease;  /* filter 효과를 부드럽게 전환 */
+}
+
+/* 마우스 호버 시 필터로 이미지가 블랙으로 변하게 */
+.honeybee:hover {
+  filter: brightness(0);  /* 이미지의 밝기를 0으로 설정해 검은색처럼 보이게 */
+}
+
+.dragonfly {
+  position: absolute;
+  width: 700px;  /* 크기 조정 */
+  height: auto;
+  display: none;  /* 기본적으로 숨김 */
+  top: 58%;       /* 화면 중앙에 위치 */
+  left: 53%;
+  transform: translate(-50%, -50%) rotate(-70deg); /* 초기 상태에서 -70도 회전 */
+  transform-origin: bottom;  /* 회전 기준점을 왼쪽 아래로 설정 */
+  transition: transform 1s ease, filter 0.3s ease;  /* filter 효과를 부드럽게 전환 */
+  animation: rotateAnimation 5s forwards;  /* 회전 애니메이션 */
+}
+
+/* 애니메이션 정의 */
+@keyframes rotateAnimation {
   0% {
-    transform: rotate(var(--rotate)); /* 시작 회전 상태 */
+    transform: translate(-50%, -50%) rotate(-70deg);  /* 초기 -70도 */
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(0deg); /* 반시계 방향으로 70도 회전 */
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-3deg); /* 그 후 반시계 방향으로 10도 회전 */
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(0deg); /* 시계 방향으로 10도 회전 */
   }
   100% {
-    transform: rotate(var(--rotate + 360)); /* 끝 회전 상태 */
+    transform: translate(-50%, -50%) rotate(-1deg); /* 그 후 다시 반시계 방향으로 10도 회전 */
   }
 }
 
+
+
+
+
+/* 마우스 호버 시 필터로 이미지가 블랙으로 변하게 */
+.dragonfly:hover {
+  filter: brightness(0);  /* 이미지의 밝기를 0으로 설정해 검은색처럼 보이게 */
+}
     .subtitle-wrapper {
       margin: 0;
       position: absolute;
@@ -152,12 +216,12 @@
       z-index: 2;
     }
 
-    .spider-eyes {
+    .eyes {
       position: absolute;
       bottom: 25px; 
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
+      height: 33px;
     }
 
     .arrow {
@@ -187,9 +251,8 @@
       transform: scale(0.7);
     }
 
-    /* 기존의 scientific-box 스타일 */
     .scientific-box {
-       font-weight: 400;
+      font-weight: 400;
       position: absolute;
       top: 35%;
       left: 5%;
@@ -202,24 +265,51 @@
       height: 25px;
     }
 
-    /* scientific-name 스타일, word-wrap을 추가하여 텍스트가 길어지면 자동으로 줄바꿈 */
     .scientific-name {
       position: absolute;
-      top: 28%;
+      top: 29%;
       left: 30%;
       font-size: 10.5rem;
       line-height: 1.05;
       text-align: left;
       color: black;
       z-index: 0;
-      word-wrap: break-word; /* 텍스트가 화면을 넘지 않도록 줄바꿈 */
-      max-width: 70vw; /* 화면 크기에 맞게 텍스트가 적절히 잘리도록 조정 */
+      word-wrap: break-word;
+      max-width: 70vw;
     }
+
+    .circle {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  animation: expandCircle 1.0s ease-out forwards;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+@keyframes expandCircle {
+  0% {
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%) scale(7);
+  }
+}
+
+
+
 
   </style>
 </head>
 <body>
-  <img src="spider.png" alt="Spider" class="spider-image" onclick="createCircle()">
+  
   <div class="title" id="title">Jumping Spider</div>
 
   <div class="subtitle-wrapper">
@@ -228,28 +318,199 @@
     <span class="right">Insects</span>
   </div>
   
-  <!-- Scientific name 박스 -->
-  <div class="scientific-box">
-    scientific name
-  </div>
-  
-  <!-- Scientific name -->
-  <div class="scientific-name" id="scientific-name">
-    Salticidae Blackwall, 1841
-  </div>
+  <div class="scientific-box">Scientific Name</div>
+  <div class="scientific-name" id="scientific-name">Salticidae Blackwall, 1841</div>
 
   <div class="bottom-line"></div>
 
-  <img src="spider_eyes.png" alt="Spider Eyes" class="spider-eyes">
-  
+  <img src="spider_eyes.png" alt="Spider Eyes" class="eyes">
+
+  <img src="spider.png" alt="Spider" class="spider-image" onclick="createCircle('spider')">
+  <div class="ladybug" onclick="createCircle('ladybug')"></div>
+  <div class="honeybee"></div>
+  <img src="dragonfly.png" alt="dragonfly" class="dragonfly" onclick="createCircle('dragonfly')">
+  <img src="horsefly.png" alt="horsefly" class="horsefly" onclick="createCircle('horsefly')">
+   
+
+
   <div class="arrow">
     <img src="arrow.png" alt="Left Arrow" class="arrow-left" onclick="changeTitle('prev')">
     <img src="arrow.png" alt="Right Arrow" class="arrow-right" onclick="changeTitle('next')">
   </div>
 
-  <div id="ladybug-container" style="display: none;"></div>
+  <script>
+  const titleData = [
+    { 
+      title: 'Jumping Spider', 
+      font: 'Montserrat', 
+      scientificName: 'Salticidae Blackwall, 1841', 
+      lineHeight: '1.05', 
+      fontSize: '10.5rem',
+      left: '30%',
+      titlefontSize: '10.5rem',
+      fontweight:'900',
+      eyesImage: 'spider_eyes.png'  /* Jumping Spider에 해당하는 eyes 이미지 */
+    },
+    { 
+      title: 'LADYBUG', 
+      font: 'Poiret One', 
+      scientificName: 'Coccinellidae Latreille, 1807', 
+      lineHeight: '0.96', 
+      fontSize: '11.7rem',
+      left: '23%',
+      titlefontSize: '11.7rem',
+      fontweight:'400',
+      eyesImage: 'ladybug_eyes.png'  /* Ladybug에 해당하는 eyes 이미지 */
+    },
+    { 
+      title: 'Horse-fly', 
+      font: 'tomorrow', 
+      scientificName: 'Tabanus chrysurus Loew, 1858', 
+      lineHeight: '0.9', 
+      fontSize: '11.5rem',
+      left: '25%',
+      titlefontSize: '11.5rem',
+      fontweight:'600',
+      eyesImage: 'horsefly_eyes.png'  /* Horse-fly에 해당하는 eyes 이미지 */
+    },
+    { 
+      title: 'Honey Bee', 
+      font: 'lobster', 
+      scientificName: 'Apis Linnaeus, 1758', 
+      lineHeight: '1.2', 
+      fontSize: '11.9rem',
+      left: '20%',
+      titlefontSize: '11.9rem',
+      fontweight:'400',
+      eyesImage: 'honeybee_eyes.png'  /* Honey Bee에 해당하는 eyes 이미지 */
+    },
+    { 
+      title: 'Dragonfly', 
+      font: 'Chonburi', 
+      scientificName: 'Odonata Fabricius, 1793', 
+      lineHeight: '1.1', 
+      fontSize: '10.2rem', 
+      left: '25%',
+      titlefontSize: '10.2rem',
+      fontweight:'400',
+      eyesImage: 'dragonfly_eyes.png'  /* Dragonfly에 해당하는 eyes 이미지 */
+    },
+  ];
 
-  <script src="main.js"></script>
+  let currentIndex = 0;
+
+  function createCircle(type) {
+  const circle = document.createElement('div');
+  circle.classList.add('circle');
+
+  // 원의 색상을 type에 따라 다르게 설정
+  if (type === 'spider') {
+    circle.style.backgroundColor = '#1b1b1b'; // Spider의 원 색상
+  } else if (type === 'dragonfly') {
+    circle.style.backgroundColor = '#6cbcaa'; // Dragonfly의 원 색상
+  } else if (type === 'ladybug') {
+    circle.style.backgroundColor = '#ff3939'; 
+  } else if (type === 'horsefly') {
+    circle.style.backgroundColor = '#c0f813'; 
+  }
+
+  document.body.appendChild(circle);
+
+  // 링크를 type에 따라 다르게 설정
+  let link = 'spider.html';
+  if (type === 'dragonfly') {
+    link = 'dragonfly.html'; // Dragonfly의 이동 링크
+  } else if (type === 'ladybug') {
+    link = 'ladybug.html'; // Ladybug의 이동 링크
+  } else if (type === 'horsefly') {
+    link = 'horsefly.html'; // Horsefly의 이동 링크
+  }
+
+  setTimeout(() => {
+    window.location.href = link;
+  }, 1500);
+}
+
+
+  function changeTitle(direction) {
+    if (direction === 'next') {
+        currentIndex = (currentIndex + 1) % titleData.length;
+    } else if (direction === 'prev') {
+        currentIndex = (currentIndex - 1 + titleData.length) % titleData.length;
+    }
+
+    const { title, font, scientificName, lineHeight, fontSize, left, titlefontSize, fontweight, eyesImage } = titleData[currentIndex];
+
+    const titleElement = document.getElementById('title');
+    titleElement.innerText = title;
+    titleElement.style.fontFamily = font;
+    titleElement.style.fontSize = titlefontSize;
+
+    const scientificNameElement = document.getElementById('scientific-name');
+    scientificNameElement.innerText = scientificName;
+    scientificNameElement.style.fontSize = fontSize;
+    scientificNameElement.style.lineHeight = lineHeight;
+    scientificNameElement.style.left = left;
+
+    document.body.style.fontFamily = font;
+    document.body.style.fontWeight = fontweight;
+
+    const spiderImage = document.querySelector('.spider-image');
+    if (title === 'Jumping Spider') {
+        spiderImage.style.display = 'block';
+    } else {
+        spiderImage.style.display = 'none';
+    }
+
+    // Ladybug 이미지 표시
+    const ladybugImage = document.querySelector('.ladybug');
+    if (title === 'LADYBUG') {
+    const randomRotation = Math.floor(Math.random() * 360); // 0~360도 랜덤 회전
+    const margin = 0.4;  // 화면 여백
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
+
+    const randomTop = Math.random() * (viewportHeight * (1 - margin) - 370) + (viewportHeight * margin / 2);
+    const randomLeft = Math.random() * (viewportWidth * (1 - margin) - 370) + (viewportWidth * margin / 2);
+
+    ladybugImage.style.display = 'block';
+    ladybugImage.style.transform = `translate(-50%, -50%) rotate(${randomRotation}deg)`;
+    ladybugImage.style.top = `${randomTop}px`;
+    ladybugImage.style.left = `${randomLeft}px`;
+} else {
+    ladybugImage.style.display = 'none';
+}
+
+
+    const horseflyImage = document.querySelector('.horsefly');
+if (title === 'Horse-fly') {
+    horseflyImage.style.display = 'block';
+} else {
+    horseflyImage.style.display = 'none';
+}
+
+const honeybeeImage = document.querySelector('.honeybee');
+if (title === 'Honey Bee') {
+    honeybeeImage.style.display = 'block';
+} else {
+    honeybeeImage.style.display = 'none';
+}
+
+const dragonflyImage = document.querySelector('.dragonfly');
+if (title === 'Dragonfly') {
+    dragonflyImage.style.display = 'block';
+} else {
+    dragonflyImage.style.display = 'none';
+}
+
+
+
+    // eyes 이미지 변경
+    const eyesImageElement = document.querySelector('.eyes');
+    eyesImageElement.src = eyesImage;  // 타이틀에 맞는 eyes 이미지를 설정
+}
+
+</script>
 
 </body>
 </html>

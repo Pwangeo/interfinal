@@ -11,13 +11,13 @@
       },
       { 
         title: 'Ladybug', 
-        font: 'comfortaa', 
+        font: 'Poiret One', 
         scientificName: 'Coccinellidae Latreille, 1807', 
-        lineHeight: '1.15', 
+        lineHeight: '1', 
         fontSize: '10rem',
         left: '23%',
         titlefontSize: '10rem',
-        fontweight:'300'
+        fontweight:'400'
       },
       { 
         title: 'Horse-fly', 
@@ -93,22 +93,12 @@
     spiderImage.style.display = 'none'; // 다른 타이틀일 때 spider 이미지 숨기기
   }
 
-  // Ladybug 타이틀일 때 ladybug.png 이미지 5개에서 10개 사이로 화면을 돌아다니게 하기
-  const ladybugImagesContainer = document.getElementById('ladybug-container');
-  if (title === 'Ladybug') {
-    ladybugImagesContainer.style.display = 'block'; // ladybug 이미지 컨테이너 보이기
-    generateLadybugs();
-  } else {
-    ladybugImagesContainer.style.display = 'none'; // Ladybug 타이틀이 아닐 때 이미지 컨테이너 숨기기
-  }
-}
-
 function generateLadybugs() {
-  const ladybugImagesContainer = document.getElementById('ladybug-container');
   const numLadybugs = Math.floor(Math.random() * 6) + 5; // 5개에서 10개 사이
 
-  // 기존에 있던 ladybug 이미지를 모두 제거
-  ladybugImagesContainer.innerHTML = '';
+  // 기존에 있던 ladybug 이미지를 모두 제거 (body에서 제거)
+  const existingLadybugs = document.querySelectorAll('.ladybug');
+  existingLadybugs.forEach(ladybug => ladybug.remove());
 
   for (let i = 0; i < numLadybugs; i++) {
     const ladybug = document.createElement('div');
@@ -128,8 +118,7 @@ function generateLadybugs() {
     ladybug.style.setProperty('--y-end', randomYEnd);
     ladybug.style.setProperty('--rotate', randomRotation + 'deg');
 
-    ladybugImagesContainer.appendChild(ladybug);
+    // body에 무당벌레 이미지 추가
+    document.body.appendChild(ladybug);
   }
 }
-
-
