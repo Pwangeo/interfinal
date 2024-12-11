@@ -79,10 +79,14 @@
       background-color: #555;
     }
 
-    canvas {
+    /* 캔버스 스타일 수정 */
+    #webcamCanvas {
       position: absolute;
-      top: 0;
-      left: 0;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* 가운데 정렬 */
+      max-width: 100vw; /* 최대 너비 90%로 제한 */
+      max-height: 70vh; /* 최대 높이 90%로 제한 */
     }
   </style>
 </head>
@@ -91,7 +95,7 @@
   <div class="subtitle-wrapper">
     <span class="left">The Eyes</span>
     <span class="center">of</span>
-    <span class="right">Jumping Spider</span>
+    <span class="right">Horsefly</span>
   </div>
 
   <div class="text-container">
@@ -104,92 +108,74 @@
   <canvas id="webcamCanvas"></canvas>
 
   <script>
- const hexagonSize = 40; // 육각형 한 변의 길이
 const canvas = document.getElementById('webcamCanvas');
 const ctx = canvas.getContext('2d');
+const hexagonSize = 35; // 육각형 한 변의 길이
 
-// 그리드 크기 설정 (가로 20개, 세로 7개)
-const gridRows = 15; // 세로로 7개
-const gridColumns = 40; // 가로로 20개
+// 캔버스 크기 설정
+canvas.width = window.innerWidth * 0.8; // 브라우저 창의 가로 크기의 80%로 설정
+canvas.height = canvas.width * 9 / 16; // 고정 비율 16:9 설정 (예: 16:9 웹캠 비율)
 
-// 각 캔버스 크기를 계산 (육각형 크기 기반)
-canvas.width = hexagonSize * gridColumns;  // 캔버스의 가로 크기
-canvas.height = hexagonSize * gridRows;    // 캔버스의 세로 크기
+// 육각형 그리기 함수
+function drawHexagon(ctx, x, y, size, image, sx, sy, sWidth, sHeight) {
+  const angle = Math.PI / 3; // 60도
+  ctx.save();
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const xOffset = x + size * Math.cos(angle * i);
+    const yOffset = y + size * Math.sin(angle * i);
+    if (i === 0) ctx.moveTo(xOffset, yOffset);
+    else ctx.lineTo(xOffset, yOffset);
+  }
+  ctx.closePath();
+  ctx.clip();
 
-// 화면 가운데 정렬
-canvas.style.position = 'absolute';
-canvas.style.top = '42%';
-canvas.style.left = '50%';
-canvas.style.transform = 'translate(-50%, -50%)';
+  // 육각형 내부에 웹캠 이미지 그리기
+  ctx.drawImage(image, sx, sy, sWidth, sHeight, x - size, y - size, size * 2, size * 2);
+  ctx.restore();
+}
 
+// 육각형 패턴 그리기 함수
+function drawPattern(video) {
+  const hexWidth = hexagonSize * Math.sqrt(3); // 육각형의 너비
+  const hexHeight = hexagonSize * 1.5; // 육각형의 높이
 
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 초기화
 
-    // 육각형 그리기 함수
-    function drawHexagon(ctx, x, y, size, image, sx, sy, sWidth, sHeight) {
-      const angle = (Math.PI / 3); // 60도
-      ctx.save();
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const xOffset = x + size * Math.cos(angle * i);
-        const yOffset = y + size * Math.sin(angle * i);
-        if (i === 0) ctx.moveTo(xOffset, yOffset);
-        else ctx.lineTo(xOffset, yOffset);
-      }
-      ctx.closePath();
-      ctx.clip();
+  for (let row = 0; row < Math.ceil(canvas.height / hexHeight); row++) {
+    for (let col = 0; col < Math.ceil(canvas.width / hexWidth); col++) {
+      const offsetX = (row % 2 === 0 ? 0 : hexWidth / 2); // 홀수 줄의 X 오프셋
+      const x = col * hexWidth + offsetX;
+      const y = row * hexHeight;
 
-      // 육각형 내부에 웹캠 이미지 그리기
-      ctx.drawImage(image, sx, sy, sWidth, sHeight, x - size, y - size, size * 2, size * 2);
-      ctx.restore();
+      // 영상에서 클리핑할 위치 계산
+      const sx = (x / canvas.width) * video.videoWidth;
+      const sy = (y / canvas.height) * video.videoHeight;
+      const sWidth = video.videoWidth / (canvas.width / hexWidth);
+      const sHeight = video.videoHeight / (canvas.height / hexHeight);
+
+      drawHexagon(ctx, x, y, hexagonSize, video, sx, sy, sWidth, sHeight);
     }
+  }
 
-    // 육각형 패턴 그리기
-    function drawPattern(video) {
-      const hexWidth = hexagonSize * Math.sqrt(3);
-      const hexHeight = hexagonSize * 1.5;
+  requestAnimationFrame(() => drawPattern(video)); // 다음 프레임 요청
+}
 
-      // 전체 캔버스 초기화
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+// 웹캠 시작
+navigator.mediaDevices.getUserMedia({ video: true })
+  .then((stream) => {
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    video.play();
 
-      for (let row = 0; row < Math.ceil(canvas.height / hexHeight); row++) {
-        for (let col = 0; col < Math.ceil(canvas.width / hexWidth); col++) {
-          const offsetX = (row % 2 === 0 ? 0 : hexWidth / 2); // 홀수 줄의 X 오프셋
-          const x = col * hexWidth + offsetX;
-          const y = row * hexHeight;
+    video.onloadeddata = () => {
+      drawPattern(video); // 육각형 패턴 시작
+    };
+  })
+  .catch((error) => {
+    console.error('웹캠을 사용할 수 없습니다:', error);
+  });
 
-          // 영상에서 클리핑할 위치 계산
-          const sx = (x / canvas.width) * video.videoWidth;
-          const sy = (y / canvas.height) * video.videoHeight;
-          const sWidth = video.videoWidth / (canvas.width / hexWidth);
-          const sHeight = video.videoHeight / (canvas.height / hexHeight);
-
-          drawHexagon(ctx, x, y, hexagonSize, video, sx, sy, sWidth, sHeight);
-        }
-      }
-
-      requestAnimationFrame(() => drawPattern(video));
-    }
-
-    // 웹캠 시작
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream) => {
-        const video = document.createElement('video');
-        video.srcObject = stream;
-        video.play();
-
-        video.onloadeddata = () => {
-          drawPattern(video);
-        };
-      })
-      .catch((error) => {
-        console.error('웹캠을 사용할 수 없습니다:', error);
-      });
-
-    // 창 크기 조정 시 캔버스 크기 업데이트
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
 
 </body>
