@@ -110,6 +110,32 @@
     .back-button:hover {
       background-color: #555;
     }
+    .arrow {
+      position: absolute;
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      width: 100%; 
+      height: 20px; 
+    }
+
+    .arrow-left, .arrow-right {
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .arrow-left {
+      left: 2%; 
+      transform: scale(0.7) scaleX(-1);
+    }
+
+    .arrow-right {
+      right: 2%;
+      transform: scale(0.7);
+    }
 
   </style>
 </head>
@@ -134,9 +160,20 @@ Color information helps bees navigate and forage efficiently by linking to brain
     <div class="text-item">벌은 자외선(UV), 파랑, 초록을 감지할 수 있으며, 빨간색은 보지 못하지만 노랑과 주황 같은 색은 인지할 수 있습니다. 이러한 색각 능력은 벌이 빛나는 꽃잎(iridescence)에서 나타나는 UV 반사를 감지하는 데도 유용하게 작용합니다. 특히, 벌의 색 지각 속도는 인간보다 5배나 빠르기 때문에 주변 환경에서 색 정보를 더 효율적으로 수집할 수 있습니다. 이렇게 수집된 색 정보는 벌의 뇌에서 탐색과 채집 행동을 조정하는 중요한 역할을 합니다.</div>
   </div>
 
-  <button class="back-button" onclick="window.history.back();">이전 페이지로 돌아가기</button>
+  <button class="back-button" onclick="goToPage('index.html')">이전 페이지로 돌아가기</button>
+
+  <a href="horsefly.html">
+  <img src="arrow.png" alt="Left Arrow" class="arrow-left">
+</a>
+<a href="dragonfly.html">
+  <img src="arrow.png" alt="Right Arrow" class="arrow-right">
+</a>
 
   <script>
+    function goToPage(page) {
+    // 현재 창에서 새로운 페이지로 이동
+    window.location.href = page;
+  }
     // 웹캠 스트림을 받아오는 함수
     function startWebcam() {
       navigator.mediaDevices.getUserMedia({ video: true })
@@ -212,7 +249,6 @@ Color information helps bees navigate and forage efficiently by linking to brain
       ctx.putImageData(imageData, 0, 0);
     }
 
-    // 원 모양으로 캔버스를 클리핑
     function clipToCircle(ctx) {
       const radius = ctx.canvas.width / 2;
       const centerX = ctx.canvas.width / 2;
@@ -226,6 +262,11 @@ Color information helps bees navigate and forage efficiently by linking to brain
     }
 
     startWebcam();
+
+     function changeTitleAndRedirect() {
+            // 단순히 newpage.html로 이동
+            window.location.href = 'index.html?title=Honey Bee';
+        }
   </script>
 
 </body>
